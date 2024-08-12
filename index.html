@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vietnam QR Explorer Prototype</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        header {
+            background: #008CBA;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .qr-sign {
+            background: #fff;
+            border: 2px solid #008CBA;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .qr-sign h2, .qr-sign h3 {
+            color: #008CBA;
+        }
+
+        .qr-sign img {
+            width: 150px;
+            margin: 20px 0;
+        }
+
+        .content {
+            background: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .content h2 {
+            color: #008CBA;
+        }
+
+        .content img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .btn-light {
+            background-color: #f9f9f9;
+            color: #008CBA;
+            border: 2px solid #008CBA;
+            cursor: pointer;
+        }
+
+        .quiz-container, .kids-mode-container {
+            display: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            background: #ddd;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer a {
+            color: #008CBA;
+            text-decoration: none;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .toggle-switch {
+            margin-bottom: 20px;
+        }
+
+        .answer {
+            padding: 10px 20px;
+            background-color: #f9f9f9;
+            color: #008CBA;
+            border: 2px solid #008CBA;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            text-align: left;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-left: 5px solid #008CBA;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Vietnam QR Explorer</h1>
+    </header>
+
+    <div class="container">
+        <!-- QR Code Sign Section -->
+        <div class="qr-sign">
+            <h2>Vietnam QR Explorer</h2>
+            <h3>“Scan, Learn, Explore!”</h3>
+            <img src="https://via.placeholder.com/150" alt="QR Code">
+            <p>Scan this code to learn more about this market/product/site!</p>
+            <a class="btn" onclick="showContent()">Go to Main Page</a>
+        </div>
+
+        <!-- Main Content Section -->
+        <div id="main-content" class="content">
+            <h2>Ben Thanh Market</h2>
+            <img src="https://via.placeholder.com/400x200" alt="Ben Thanh Market">
+            <p id="main-description">Ben Thanh Market is one of the oldest and most famous markets in Ho Chi Minh City, offering a wide variety of goods and local food...</p>
+            <h3 id="tips-title">Cultural Tips</h3>
+            <p id="tips-content">When visiting Ben Thanh Market, it's customary to bargain with the vendors. Start by offering half of the asking price...</p>
+
+            <div>
+                <a class="btn" onclick="playAudio()">Play Audio Guide</a>
+                <a class="btn btn-light" onclick="showQuiz()">Take the Quiz</a>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quiz-content" class="quiz-container content">
+            <h2>Cultural Quiz</h2>
+            <p>What is a popular food item you can find at Ben Thanh Market?</p>
+            <a class="answer" onclick="showFeedback(false)">Option 1: Sushi</a>
+            <a class="answer" onclick="showFeedback(true)">Option 2: Pho</a>
+            <a class="answer" onclick="showFeedback(false)">Option 3: Tacos</a>
+            <div id="feedback" class="feedback"></div>
+            <a class="btn" onclick="showContent()">Back</a>
+        </div>
+
+        <!-- Kids Mode Content -->
+        <div id="kids-mode-content" class="kids-mode-container content">
+            <h2>Kid’s Mode: Treasure Hunt!</h2>
+            <p>Follow the clues to find the next treasure!</p>
+            <p><strong>Clue 1:</strong> Find the red lantern near the market entrance!</p>
+            <img src="https://via.placeholder.com/200" alt="Clue Image">
+            <a class="btn" onclick="showContent()">Back</a>
+        </div>
+
+        <!-- Footer/Sharing Section -->
+        <div class="footer">
+            <a onclick="toggleKidsMode()">Toggle Kid Mode</a> | 
+            <a onclick="showContent()">Main Page</a>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle interactivity
+        function showContent() {
+            document.querySelector('.qr-sign').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('quiz-content').style.display = 'none';
+            document.getElementById('kids-mode-content').style.display = 'none';
+        }
+
+        function showQuiz() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('quiz-content').style.display = 'block';
+            document.getElementById('kids-mode-content').style.display = 'none';
+        }
+
+        function showFeedback(correct) {
+            const feedbackDiv = document.getElementById('feedback');
+            if (correct) {
+                feedbackDiv.innerHTML = "Correct! Pho is a popular food item at Ben Thanh Market.";
+                feedbackDiv.style.borderLeftColor = "green";
+            } else {
+                feedbackDiv.innerHTML = "Incorrect. Try again!";
+                feedbackDiv.style.borderLeftColor = "red";
+            }
+        }
+
+        function toggleKidsMode() {
+            const isKidsMode = document.getElementById('kids-mode-content').style.display === 'block';
+            if (isKidsMode) {
+                document.getElementById('kids-mode-content').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+            } else {
+                document.getElementById('kids-mode-content').style.display = 'block';
+                document.getElementById('main-content').style.display = 'none';
+                document.getElementById('quiz-content').style.display = 'none';
+            }
+        }
+
+        function playAudio() {
+            alert("Playing audio guide...");
+        }
+    </script>
+</body>
+</html>
+
+Initial commit with HTML/CSS prototype code
